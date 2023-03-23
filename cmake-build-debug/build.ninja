@@ -64,6 +64,12 @@ build CMakeFiles/Assignment8.dir/index.c.o: C_COMPILER__Assignment8_Debug /Users
   OBJECT_DIR = CMakeFiles/Assignment8.dir
   OBJECT_FILE_DIR = CMakeFiles/Assignment8.dir
 
+build CMakeFiles/Assignment8.dir/display2.c.o: C_COMPILER__Assignment8_Debug /Users/rhysmahannah/CLionProjects/Assignment8/display2.c || cmake_object_order_depends_target_Assignment8
+  DEP_FILE = CMakeFiles/Assignment8.dir/display2.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu11
+  OBJECT_DIR = CMakeFiles/Assignment8.dir
+  OBJECT_FILE_DIR = CMakeFiles/Assignment8.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Assignment8
@@ -72,7 +78,7 @@ build CMakeFiles/Assignment8.dir/index.c.o: C_COMPILER__Assignment8_Debug /Users
 #############################################
 # Link the executable Assignment8
 
-build Assignment8: C_EXECUTABLE_LINKER__Assignment8_Debug CMakeFiles/Assignment8.dir/create.c.o CMakeFiles/Assignment8.dir/display.c.o CMakeFiles/Assignment8.dir/index.c.o
+build Assignment8: C_EXECUTABLE_LINKER__Assignment8_Debug CMakeFiles/Assignment8.dir/create.c.o CMakeFiles/Assignment8.dir/display.c.o CMakeFiles/Assignment8.dir/index.c.o CMakeFiles/Assignment8.dir/display2.c.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk
   OBJECT_DIR = CMakeFiles/Assignment8.dir
   POST_BUILD = :
