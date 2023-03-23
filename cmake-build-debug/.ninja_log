@@ -1,0 +1,11 @@
+# ninja log v5
+0	25	1679586841757246671	CMakeFiles/Assignment8.dir/display.c.o	18cb456bf7eb1ea2
+0	71	1679586841803234753	CMakeFiles/Assignment8.dir/create.c.o	c63ae9a689ec1621
+72	105	1679586841837191280	Assignment8	bc4ab1663d6c4c2d
+0	34	1679586905203758543	CMakeFiles/Assignment8.dir/create.c.o	c63ae9a689ec1621
+34	66	1679586905236262452	Assignment8	bc4ab1663d6c4c2d
+1	36	1679586920832049000	CMakeFiles/Assignment8.dir/create.c.o	c63ae9a689ec1621
+36	70	1679586920866412847	Assignment8	bc4ab1663d6c4c2d
+1	20	1679586975580612829	CMakeFiles/Assignment8.dir/create.c.o	c63ae9a689ec1621
+1	28	1679586975587947625	CMakeFiles/Assignment8.dir/display.c.o	18cb456bf7eb1ea2
+28	63	1679586975623598345	Assignment8	bc4ab1663d6c4c2d
