@@ -6,7 +6,7 @@
 //#include <string.h>
 //#include <stdlib.h>
 //
-//#define MAX_NAME_LENGTH  20
+//#define MAX_CHAR_LENGTH  20
 //#define INPUT_FILE_NAME  "accounts.csv"
 //#define OUTPUT_FILE_NAME "accounts.dat"
 //
@@ -14,8 +14,8 @@
 //struct customerData
 //{
 //    int    AccountNumber;
-//    char   FirstName[ MAX_NAME_LENGTH ];
-//    char   LastName[ MAX_NAME_LENGTH ];
+//    char   FirstName[ MAX_CHAR_LENGTH ];
+//    char   LastName[ MAX_CHAR_LENGTH ];
 //    double AccountBalance;
 //    double LastPaymentAmount;
 //};

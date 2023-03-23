@@ -5,15 +5,15 @@
 //#include <stdio.h>
 //#include <stdlib.h>
 //
-//#define MAX_NAME_LENGTH 20
+//#define MAX_CHAR_LENGTH 20
 //#define FILE_NAME       "accounts.dat"
 //
 //// Struct that represents customer account
 //struct customerData
 //{
 //    int    AccountNumber;
-//    char   FirstName[ MAX_NAME_LENGTH ];
-//    char   LastName[ MAX_NAME_LENGTH ];
+//    char   FirstName[ MAX_CHAR_LENGTH ];
+//    char   LastName[ MAX_CHAR_LENGTH ];
 //    double AccountBalance;
 //    double LastPaymentAmount;
 //};
