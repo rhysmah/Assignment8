@@ -6,8 +6,9 @@
 //#include <stdlib.h>
 //#include <string.h>
 //
+//#define APP_NAME        "Assign08"
 //#define MAX_CHAR_LENGTH 20
-//#define INDEX_FILE      "accounts.idx" // For Accounts Balance descending order
+//#define INDEX_FILE      "accounts.idx" // For accounts balance descending order
 //#define DATA_FILE       "accounts.dat" // For natural order
 //
 //// Struct that represents customer account
@@ -20,13 +21,13 @@
 //} Customer;
 //
 //typedef struct indexHeader {        // Index file header; contains the metadata for records.
-//    char IndexKey[MAX_CHAR_LENGTH]; // The field by which the data is sorted.
+//    char Key[MAX_CHAR_LENGTH]; // The field by which the data is sorted.
 //    char AppName[MAX_CHAR_LENGTH];  // The name of the index file.
 //    int RecordCount;                // The number of records in the index.
 //} IndexHeader;
 //
 //typedef struct indexRecord { // The records themselves
-//    double IndexKey;         // IndexKey for records will be AccountBalance, as per assignment instructions.
+//    double Key;         // Key for records will be AccountBalance, as per assignment instructions.
 //    long FilePosition;       // The position of the record within the records file.
 //} IndexRecord;
 //
@@ -174,7 +175,7 @@
 //
 //    // (5) Confirm that .dat and .idx files are the correct pair.
 //    // (a) First, check that the data file names match.
-//    if (strcmp(indexHeader.AppName, DATA_FILE) != 0) {
+//    if (strcmp(indexHeader.AppName, APP_NAME) != 0) {
 //        puts("ERROR: Data File and Index File are different versions. Terminating program.");
 //
 //        fclose(dataFilePtr);
