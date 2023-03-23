@@ -5,9 +5,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define APP_NAME        "Assignment08"
 #define DAT_FILE        "accounts.dat"
-#define IDX_NAME        "accounts.idx"   // Name of the index file we'll create.
-#define MAX_CHAR_LENGTH 20               // Max length for struct char fields
+#define IDX_NAME        "accounts.idx"
+
+#define MAX_CHAR_LENGTH 20
 
 typedef enum {
     ACCOUNT,
@@ -87,7 +89,7 @@ int main() {
     indexRecords = (IndexRecord *) calloc(dataRecordCount, sizeof(IndexRecord));
 
     // (3) Add metadata to index header.
-    strcpy(indexHeader.AppName, IDX_NAME);     // Cannot assign string; must copy string to destination.
+    strcpy(indexHeader.AppName, APP_NAME);     // Cannot assign string; must copy string to destination.
     indexHeader.IndexKey = indexKey;           // Cannot assign string; must copy string to destination.
     indexHeader.RecordCount = dataRecordCount; // Number of records the file will contain.
 
