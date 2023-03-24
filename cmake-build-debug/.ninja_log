@@ -1,20 +1,7 @@
 # ninja log v5
-1	30	1679609842972495289	CMakeFiles/Assignment8.dir/display.c.o	18cb456bf7eb1ea2
-1	30	1679607373389256421	CMakeFiles/Assignment8.dir/display2.c.o	ce8dc4523f6422be
-1	20	1679609842962812210	CMakeFiles/Assignment8.dir/index.c.o	2867b085c21c0ebd
-0	38	1679617919463830970	build.ninja	578f3f9edbdc8e03
-0	19	1679609725834856740	CMakeFiles/Assignment8.dir/create.c.o	c63ae9a689ec1621
-30	59	1679609843002105592	Assignment8	27dc49a38b109484
-0	33	1679617919463830970	build.ninja	578f3f9edbdc8e03
-0	17	1679617919485551055	CMakeFiles/Assignment8.dir/index.c.o	2867b085c21c0ebd
-1	18	1679617919485551389	CMakeFiles/Assignment8.dir/display.c.o	18cb456bf7eb1ea2
-0	29	1679617919496925961	CMakeFiles/Assignment8.dir/create.c.o	c63ae9a689ec1621
-29	57	1679617919525529222	Assignment8	27dc49a38b109484
-1	19	1679617926178231923	CMakeFiles/Assignment8.dir/create.c.o	c63ae9a689ec1621
-1	28	1679617926186606148	CMakeFiles/Assignment8.dir/index.c.o	2867b085c21c0ebd
-28	57	1679617926216415589	Assignment8	27dc49a38b109484
-1	19	1679617937097192646	CMakeFiles/Assignment8.dir/index.c.o	2867b085c21c0ebd
-1	29	1679617937106466975	CMakeFiles/Assignment8.dir/display.c.o	18cb456bf7eb1ea2
-29	58	1679617937136202209	Assignment8	27dc49a38b109484
 1	27	1679617987882297849	CMakeFiles/Assignment8.dir/display.c.o	18cb456bf7eb1ea2
+1	30	1679607373389256421	CMakeFiles/Assignment8.dir/display2.c.o	ce8dc4523f6422be
+1	19	1679617937097192646	CMakeFiles/Assignment8.dir/index.c.o	2867b085c21c0ebd
+0	33	1679628773984085217	build.ninja	578f3f9edbdc8e03
+1	19	1679617926178231923	CMakeFiles/Assignment8.dir/create.c.o	c63ae9a689ec1621
 27	56	1679617987911160229	Assignment8	27dc49a38b109484
