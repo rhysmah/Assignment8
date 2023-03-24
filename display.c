@@ -12,47 +12,37 @@
 
 #define MAX_CHAR_LENGTH 20
 
-typedef enum {
-    ACCOUNT,
-    FIRST,
-    LAST,
-    ACCOUNT_BALANCE
-} IndexKey;
+typedef enum {ACCOUNT_BALANCE} IndexKey;
 
 typedef union {
-    int Account;
-    char First[MAX_CHAR_LENGTH];
-    char Last[MAX_CHAR_LENGTH];
     double AccountBalance;
 } KeyType;
 
 typedef struct {
-    int AccountNumber;
-    char FirstName[MAX_CHAR_LENGTH];
-    char LastName[MAX_CHAR_LENGTH];
+    int    AccountNumber;
+    char   FirstName[MAX_CHAR_LENGTH];
+    char   LastName[MAX_CHAR_LENGTH];
     double AccountBalance;
     double LastPaymentAmount;
 } Customer;
 
 typedef struct {
-    char Key[MAX_CHAR_LENGTH];
-    char AppName[MAX_CHAR_LENGTH];
-    int RecordCount;
-} IndexHeader;
+    KeyType Key;
+    long    FilePosition;
+} IndexRecord;
 
 typedef struct {
-    double Key;
-    long FilePosition;
-} IndexRecord;
+    IndexKey IndexKey;
+    char     AppName[MAX_CHAR_LENGTH];
+    int      RecordCount;
+} IndexHeader;
 
 
 // FUNCTION PROTOTYPES
 long fileSize(FILE *input);
-void printNaturalOrder(int numOfArgs, char inputFileName[], ...);
-void printAccountBalanceDescendingOrder(int numOfArgs, char inputFileName[], ...);
+void printNaturalOrder(int numOfArgs, char dataFile[], ...);
+void printAccountBalanceDescendingOrder(int numOfArgs, char dataFile[], char indexFile[], ...);
 
-
-IndexKey indexKey;
 
 // DRIVES THE PROGRAM
 int main() {
@@ -61,7 +51,7 @@ int main() {
     int userChoice;
 
     printf("------------------\n"
-           "-- FILE PRINTER --\n"
+           "-  FILE PRINTER  -\n"
            "------------------\n"
            "Select an option:\n"
            "  (1) Account Balance: Natural Order\n"
@@ -78,7 +68,7 @@ int main() {
                 break;
             }
             case 2: {
-                printAccountBalanceDescendingOrder(1, INDEX_FILE);
+                printAccountBalanceDescendingOrder(2, DATA_FILE, INDEX_FILE);
                 break;
             }
             default: {
@@ -101,14 +91,14 @@ int main() {
 // FUNCTION DEFINITIONS
 
 // Prints records in natural order.
-void printNaturalOrder(int numOfArgs, char inputFileName[], ...) {
+void printNaturalOrder(int numOfArgs, char dataFile[], ...) {
 
     // Confirm function was passed correct number of arguments.
     int count;
     int total = 0;
     va_list args;
 
-    va_start(args, inputFileName);
+    va_start(args, dataFile);
     for (count = 0; count < numOfArgs; ++count) {
         total += va_arg(args, int);
     }
@@ -124,8 +114,8 @@ void printNaturalOrder(int numOfArgs, char inputFileName[], ...) {
 
     // (1) Check if file is found; if not, print error message and terminate program.
     // Else, continue processing.
-    if ((dataFilePtr = fopen(inputFileName, "rb")) == NULL) {
-        printf("ERROR: File \"%s\" not found. Terminating program.", inputFileName);
+    if ((dataFilePtr = fopen(dataFile, "rb")) == NULL) {
+        printf("ERROR: File \"%s\" not found. Terminating program.", dataFile);
         exit(EXIT_FAILURE);
     }
 
@@ -158,7 +148,7 @@ void printNaturalOrder(int numOfArgs, char inputFileName[], ...) {
 }
 
 // Prints records based on account balance, in descending order.
-void printAccountBalanceDescendingOrder(int numOfArgs, char inputFileName[], ...) {
+void printAccountBalanceDescendingOrder(int numOfArgs, char dataFile[], char indexFile[], ...) {
 
     // Confirm number of arguments is correct.
 
