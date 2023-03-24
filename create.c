@@ -1,6 +1,7 @@
 //
 // Created by Rhys Mahannah on 2023-03-18.
 //
+
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
@@ -10,28 +11,24 @@
 #define INPUT_FILE_NAME  "accounts.csv"
 #define OUTPUT_FILE_NAME "accounts.dat"
 
-// Struct that represents a customer account.
 typedef struct {
-    int AccountNumber;
-    char FirstName[MAX_CHAR_LENGTH];
-    char LastName[MAX_CHAR_LENGTH];
+    int    AccountNumber;
+    char   FirstName[MAX_CHAR_LENGTH];
+    char   LastName[MAX_CHAR_LENGTH];
     double AccountBalance;
     double LastPaymentAmount;
 } CustomerData;
 
-
-// FUNCTION PROTOTYPE
-void readAndWriteCustomerDataToBinaryFile(int numOfArgs, char inputFileName[], char outputFileName[], ...);
-
+// FUNCTION PROTOTYPES
+void readWriteCustomerDataToBinaryFile(int numOfArgs, const char inputFileName[], const char outputFileName[], ...);
 
 // DRIVES THE PROGRAM
 int main() {
-    readAndWriteCustomerDataToBinaryFile(2, INPUT_FILE_NAME, OUTPUT_FILE_NAME);
+    readWriteCustomerDataToBinaryFile(2, INPUT_FILE_NAME, OUTPUT_FILE_NAME);
 }
 
-
-// FUNCTION DEFINITION
-void readAndWriteCustomerDataToBinaryFile(int numOfArgs, char inputFileName[], char outputFileName[], ...) {
+// FUNCTION DEFINITIONS
+void readWriteCustomerDataToBinaryFile(int numOfArgs, const char inputFileName[], const char outputFileName[], ...) {
 
     // CONFIRM ARGUMENT COUNT
     int count;
@@ -53,21 +50,27 @@ void readAndWriteCustomerDataToBinaryFile(int numOfArgs, char inputFileName[], c
     }
 
     // RUN FUNCTION
-    FILE *CustomerDataInputFilePtr;  // Pointer to file to be read.
-    FILE *CustomerDataOutputFilePtr; // Pointer to file to be created/written to.
+    FILE *inputCSVFilePtr;  // Pointer to CSV file to be read.
+    FILE *outputDATFilePtr; // Pointer to DAT file to be created.
 
-    // (1) Attempt to read file. If it does exist, issue warning to user that file will be overwritten.
-    // If user accepts, then open file in write-mode.
-    if ((CustomerDataOutputFilePtr = fopen(outputFileName, "rb")) != NULL) {
-        fclose(CustomerDataOutputFilePtr); // Immediately close file; it's confirmed to exist.
+    // (1) Open CSV input file in read-only mode.
+    if ((inputCSVFilePtr = fopen(inputFileName, "rb")) == NULL) {
+        printf("\nERROR: \"%s\" not found. Terminating operation.", inputFileName);
+        exit(EXIT_FAILURE);
+    }
 
-        // Asks user if they'd like to overwrite file.
+    // (2) Check if DAT output file already exists.
+    if ((outputDATFilePtr = fopen(outputFileName, "rb")) != NULL) {
+
+        // DAT file confirmed to exist and is currently opened in read-only mode.
+        // Immediately close file; if user wants to overwrite current file, it will be re-opened in write mode.
+        fclose(outputDATFilePtr);
+
+        // (3) If DAT file already exists, ask user if they want to overwrite it.
         char userChoice;
-        printf("\nThe file \"%s\" already exists.\n"
-               "If you continue, the contents of the file will be overwritten.\n"
-               "Overwrite file? (y)es or (n)o\n"
-               ">>> ", outputFileName);
-
+        printf("\n"
+               "File \"%s\" already exists. Overwrite?\n"
+               "y or n: ", outputFileName);
         scanf("%c", &userChoice);
 
         while (userChoice != 'y' && userChoice != 'n') {
@@ -76,57 +79,43 @@ void readAndWriteCustomerDataToBinaryFile(int numOfArgs, char inputFileName[], c
         }
 
         if (userChoice == 'n') {
-            printf("\nThe file \"%s\" will NOT be overwritten. Terminating program.\n", outputFileName);
+            printf("\n"
+                   "File \"%s\" will not be overwritten. Terminating program.\n", outputFileName);
             exit(EXIT_SUCCESS);
         }
-
-        // User has chosen to overwrite file; check that file was successfully accessed.
-        if ((CustomerDataOutputFilePtr = fopen(outputFileName, "wb+")) == NULL) {
-            printf("WARNING: \"%s\" was not accessed. Terminating program\n", outputFileName);
-            exit(EXIT_FAILURE);
-        }
-
-        printf("\nOverwriting \"%s\"...", outputFileName);
     }
 
-        // File did NOT exist, so attempt to create file; if that fails, issue warning and terminate program.
-    else {
-        if ((CustomerDataOutputFilePtr = fopen(outputFileName, "ab+")) == NULL) {
-            printf("WARNING: \"%s\" was not created. Terminating program", outputFileName);
-            exit(EXIT_FAILURE);
-        }
-
-        printf("\nWriting customer data to \"%s\"...\n", outputFileName);
-    }
-
-    // (2) Open file for reading.
-    // If it doesn't exist, print warning, terminate program, and close output file; else, process data.
-    if ((CustomerDataInputFilePtr = fopen(inputFileName, "r")) == NULL) {
-        printf("\nWARNING: \"%s\" not found. Terminating program.", inputFileName);
-        fclose(CustomerDataOutputFilePtr);
+    // (4) Open DAT file in write mode.
+    if ((outputDATFilePtr = fopen(outputFileName, "wb")) == NULL) {
+        printf("\nERROR: \"%s\" not accessed. Terminating operation.", outputFileName);
         exit(EXIT_FAILURE);
-    } else {
-
-        CustomerData customer = {0, "", "", 0.0, 0.0};
-
-        // Loop through file and save records to struct until end-of-file.
-        while (!feof(CustomerDataInputFilePtr)) {
-            // Scan data and save it to appropriate variables in struct.
-            // For strings, use formatting to read all characters up to but NOT including commas.
-            // A space before and after the values means fscanf() will skip all whitespace characters.
-            fscanf(CustomerDataInputFilePtr, " %d , %19[^,] , %19[^,] , %lf , %lf \n",
-                   &customer.AccountNumber,
-                   customer.FirstName,
-                   customer.LastName,
-                   &customer.AccountBalance,
-                   &customer.LastPaymentAmount);
-
-            // Write struct to binary file.
-            fwrite(&customer, sizeof(CustomerData), 1, CustomerDataOutputFilePtr);
-        }
     }
-    fclose(CustomerDataInputFilePtr);  // Close read-only file.
-    fclose(CustomerDataOutputFilePtr); // Close output file -- the file to which data was written.
 
-    puts("\nData successfully written.");
+    // (5) Write contents from CSV file into DAT file (binary).
+    CustomerData tempCustomer = {0, "", "", 0.0, 0.0}; // Dummy data
+
+    printf("\nWriting data from \"%s\" to \"%s\"...", inputFileName, outputFileName);
+
+    // Loop through file and save records to struct until end-of-file.
+    int recordCount = 0;
+    while (!feof(inputCSVFilePtr)) {
+
+        // Scan data; save it to appropriate variables in struct.
+        // For strings, skip whitespaces and commas.
+        fscanf(inputCSVFilePtr, " %d , %19[^,] , %19[^,] , %lf , %lf \n",
+               &tempCustomer.AccountNumber,
+               tempCustomer.FirstName,
+               tempCustomer.LastName,
+               &tempCustomer.AccountBalance,
+               &tempCustomer.LastPaymentAmount);
+
+        // Write struct to in binary to DAT file.
+        fwrite(&tempCustomer, sizeof(CustomerData), 1, outputDATFilePtr);
+
+        ++recordCount;
+    }
+    fclose(inputCSVFilePtr);
+    fclose(outputDATFilePtr);
+
+    printf("\n%d record(s) were successfully written to \"%s\"\n", recordCount, outputFileName);
 }
