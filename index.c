@@ -5,40 +5,43 @@
 //#include <string.h>
 //#include <stdlib.h>
 //
-//#define APP_NAME        "Assignment08"
-//#define DAT_FILE        "accounts.dat"
-//#define IDX_NAME        "accounts.idx"
+//#define APP_NAME "Assignment08"
+//#define DAT_FILE "accounts.dat"
+//#define IDX_NAME "accounts.idx"
 //
 //#define MAX_CHAR_LENGTH 20
 //
-//typedef enum {ACCOUNT_BALANCE} IndexKey;
+//typedef enum {
+//    ACCOUNT_BALANCE
+//} IndexKey;
 //
 //typedef union {
 //    double AccountBalance;
 //} KeyType;
 //
 //typedef struct {
-//    int    AccountNumber;
-//    char   FirstName[MAX_CHAR_LENGTH];
-//    char   LastName[MAX_CHAR_LENGTH];
+//    int AccountNumber;
+//    char FirstName[MAX_CHAR_LENGTH];
+//    char LastName[MAX_CHAR_LENGTH];
 //    double AccountBalance;
 //    double LastPaymentAmount;
 //} Customer;
 //
-//typedef struct {          // The records themselves
-//    KeyType Key;          // IndexKey for records will be AccountBalance, as per assignment instructions.
-//    long    FilePosition; // The position of the record within the records file.
+//typedef struct {       // The records themselves
+//    KeyType Key;       // IndexKey for records will be AccountBalance, as per assignment instructions.
+//    long FilePosition; // The position of the record within the records file.
 //} IndexRecord;
 //
 //typedef struct {                   // Index file header; contains the metadata for records.
 //    IndexKey IndexKey;             // The field by which the data is sorted.
-//    char     AppName[MAX_CHAR_LENGTH]; // The name of the index file.
-//    int      RecordCount;               // The number of records in the index.
+//    char AppName[MAX_CHAR_LENGTH]; // The name of the index file.
+//    int RecordCount;               // The number of records in the index.
 //} IndexHeader;
 //
 //
 //// FUNCTION PROTOTYPES
 //long fileSize(FILE *input);
+//
 //int compare(const void *left, const void *right);
 //
 //IndexKey indexKey;
@@ -100,7 +103,7 @@
 //    // Set loop that runs if not at EOF and first record, above, was read successfully.
 //    while (!feof(dataFilePtr) && readCount == 1) {
 //        indexRecords[indexRecordCount].Key.AccountBalance = tempCustomer.AccountBalance; // This is how records are org.
-//        indexRecords[indexRecordCount].FilePosition = filePosition;            // Position of record in file.
+//        indexRecords[indexRecordCount].FilePosition = filePosition;                      // Position of record in file.
 //
 //        ++indexRecordCount;                // Move to the next record to be written.
 //        filePosition = ftell(dataFilePtr); // Save the position where next record will be written.
@@ -109,7 +112,7 @@
 //    }
 //
 //    // (5) Organize data in header according to AccountBalance descending, as per assignment instructions.
-//    qsort(indexRecords, indexRecordCount, sizeof(IndexRecord), compare);
+//    qsort(indexRecords, indexRecordCount, sizeof(IndexRecord), &compare);
 //
 //    printf("Index Header Size: %lu\n"
 //           "Index Record Size: %lu\n"
@@ -164,5 +167,12 @@
 //    IndexRecord *pRight = (IndexRecord *) right;
 //
 //    // Return result based on size of Account Balance.
-//    return pRight->Key.AccountBalance > pLeft->Key.AccountBalance;
+//    if (pLeft->Key.AccountBalance > pRight->Key.AccountBalance)
+//    {
+//        return -1;
+//    }
+//    else if (pLeft->Key.AccountBalance < pRight->Key.AccountBalance) {
+//        return 1;
+//    }
+//    return 0; // If they are equal
 //}
