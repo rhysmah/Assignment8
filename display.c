@@ -12,35 +12,39 @@
 
 #define MAX_CHAR_LENGTH 20
 
-typedef enum {ACCOUNT_BALANCE} IndexKey;
+typedef enum {
+    ACCOUNT_BALANCE
+} IndexKey;
 
 typedef union {
     double AccountBalance;
 } KeyType;
 
 typedef struct {
-    int    AccountNumber;
-    char   FirstName[MAX_CHAR_LENGTH];
-    char   LastName[MAX_CHAR_LENGTH];
+    int AccountNumber;
+    char FirstName[MAX_CHAR_LENGTH];
+    char LastName[MAX_CHAR_LENGTH];
     double AccountBalance;
     double LastPaymentAmount;
 } Customer;
 
 typedef struct {
     KeyType Key;
-    long    FilePosition;
+    long FilePosition;
 } IndexRecord;
 
 typedef struct {
     IndexKey IndexKey;
-    char     AppName[MAX_CHAR_LENGTH];
-    int      RecordCount;
+    char AppName[MAX_CHAR_LENGTH];
+    int RecordCount;
 } IndexHeader;
 
 
 // FUNCTION PROTOTYPES
 long fileSize(FILE *input);
+
 void printNaturalOrder(int numOfArgs, char dataFile[], ...);
+
 void printAccountBalanceDescendingOrder(int numOfArgs, char dataFile[], char indexFile[], ...);
 
 
