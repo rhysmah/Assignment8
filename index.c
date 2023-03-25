@@ -51,7 +51,7 @@ int compare(const void *left, const void *right);
 IndexKey indexKey;
 
 // DRIVES THE PROGRAM
-int main() {
+int main(int argc, char *argv[]) {
 
     FILE *dataFilePtr;                // Will point to the .dat file from which we'll be reading.
     FILE *indexAccountBalanceFilePtr; // Will point to the .idx file we'll be creating.

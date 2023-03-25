@@ -20,7 +20,7 @@ typedef struct {
 
 
 // DRIVES THE PROGRAM
-int main() {
+int main(int argc, char *argv[]) {
 
     FILE *inputCSVFilePtr;  // Pointer to CSV file to be read.
     FILE *outputDATFilePtr; // Pointer to DAT file to be created.

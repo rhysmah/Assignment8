@@ -49,7 +49,7 @@ void printAccountBalanceInDescendingOrder(int numOfArgs, char dataFile[], char i
 
 
 // DRIVES THE PROGRAM
-int main() {
+int main(int argc, char *argv[]) {
 
     int EXIT_VALUE = 3;
     int userChoice;
