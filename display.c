@@ -45,7 +45,7 @@ long fileSize(FILE *input);
 
 void printNaturalOrder(int numOfArgs, char dataFile[], ...);
 
-void printAccountBalanceDescendingOrder(int numOfArgs, char dataFile[], char indexFile[], ...);
+void printAccountBalanceInDescendingOrder(int numOfArgs, char dataFile[], char indexFile[], ...);
 
 
 // DRIVES THE PROGRAM
@@ -72,7 +72,7 @@ int main() {
                 break;
             }
             case 2: {
-                printAccountBalanceDescendingOrder(2, DATA_FILE, INDEX_FILE);
+                printAccountBalanceInDescendingOrder(2, DATA_FILE, INDEX_FILE);
                 break;
             }
             default: {
@@ -152,7 +152,7 @@ void printNaturalOrder(int numOfArgs, char dataFile[], ...) {
 }
 
 // Prints records based on account balance, in descending order.
-void printAccountBalanceDescendingOrder(int numOfArgs, char dataFile[], char indexFile[], ...) {
+void printAccountBalanceInDescendingOrder(int numOfArgs, char dataFile[], char indexFile[], ...) {
 
     // Confirm number of arguments is correct.
 
