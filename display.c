@@ -5,11 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define APP_NAME   "Assignment08"
+#define MAX_CHAR_LENGTH 20
+
 #define INDEX_FILE "accounts.idx"
 #define DATA_FILE  "accounts.dat"
-
-#define MAX_CHAR_LENGTH 20
+#define APP_NAME   "Assignment08"
 
 typedef enum {
     ACCOUNT_BALANCE
@@ -51,7 +51,7 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]);
 int main(int argc, char *argv[]) {
 
     if (argc != 3) {
-        printf("\nYou must pass 3 arguments. Terminating program.");
+        printf("\nThis program requires 3 arguments. Terminating program.");
         exit(EXIT_FAILURE);
     }
 
@@ -103,15 +103,13 @@ void printNaturalOrder(char dataFile[]) {
     FILE *dataFilePtr; // Will point to the file from which data is read.
 
     // (1) Check if file is found; if not, print error message and terminate program.
-    // Else, continue processing.
     if ((dataFilePtr = fopen(dataFile, "rb")) == NULL) {
         printf("ERROR: File \"%s\" not found. Terminating program.", dataFile);
         exit(EXIT_FAILURE);
     }
 
     // Print data headers
-    printf("\n-----------------------------------------------------------------\n"
-           "NATURAL ORDER\n"
+    printf("\nNATURAL ORDER\n"
            "-----------------------------------------------------------------\n"
            "%7s %8s %11s %15s %18s\n"
            "-----------------------------------------------------------------\n",
@@ -140,8 +138,6 @@ void printNaturalOrder(char dataFile[]) {
 // Prints records based on account balance, in descending order.
 void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
 
-    // Confirm number of arguments is correct.
-
     FILE *dataFilePtr;
     FILE *indexAccountBalanceFilePtr;
 
@@ -151,26 +147,26 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
     IndexHeader indexHeader;
     IndexRecord indexTemp;
 
-    // (1) Open .dat file in read-only mode. If not found, print error and terminate; else, continue.
+    // Open .dat file in read-only mode. If not found, print error and terminate; else, continue.
     if ((dataFilePtr = fopen(dataFile, "rb")) == NULL) {
         printf("ERROR: File \"%s\" not found. Terminating program.\n", dataFile);
         exit(EXIT_FAILURE);
     }
 
-    // (2) Open .idx file in read-only mode. If not found, print error and terminate; else, continue.
+    // Open .idx file in read-only mode. If not found, print error and terminate; else, continue.
     if ((indexAccountBalanceFilePtr = fopen(indexFile, "rb")) == NULL) {
         printf("ERROR: File \"%s\" not found. Terminating program.\n", indexFile);
         exit(EXIT_FAILURE);
     }
 
-    // (3) Calculate # records in .dat file
+    // Calculate # records in .dat file
     recordCount = fileSize(dataFilePtr) / sizeof(Customer);
 
-    // (4) Read meta data in Index Header
+    // Read meta data in Index Header
     fread(&indexHeader, sizeof(IndexHeader), 1, indexAccountBalanceFilePtr);
 
-    // (5) Confirm that .dat and .idx files are the correct pair.
-    // (a) First, check that the data file names match.
+    // Confirm that .dat and .idx files are the correct pair.
+    // First, check that the data file names match.
     if (strcmp(indexHeader.AppName, APP_NAME) != 0) {
         puts("ERROR: Data File and Index File are different versions. Terminating program.");
 
@@ -180,7 +176,7 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
         exit(EXIT_FAILURE);
     }
 
-    // (b) Next, check that both files have the same number of records.
+    // Next, check that both files have the same number of records.
     if (indexHeader.RecordCount != recordCount) {
         puts("ERROR: Data File and Index File have different number of records. Terminating program.");
 
@@ -190,9 +186,8 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
         exit(EXIT_FAILURE);
     }
 
-    // (6) Print out records in specified order.
-    printf("\n-----------------------------------------------------------------\n"
-           "Account Balance (Descending Order)\n"
+    // Print out records in specified order.
+    printf("\nAccount Balance (Descending Order)\n"
            "-----------------------------------------------------------------\n"
            "%7s %8s %11s %15s %18s\n"
            "-----------------------------------------------------------------\n",
