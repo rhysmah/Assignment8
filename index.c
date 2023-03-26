@@ -4,48 +4,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "assign08.h"
 
 #define APP_NAME "Assignment08"
 #define DAT_FILE "accounts.dat"
 #define IDX_NAME "accounts.idx"
-
-#define MAX_CHAR_LENGTH 20
-
-// How we'll sort data. Created enum, because we may want to add more sorting fields.
-typedef enum {
-    ACCOUNT_BALANCE
-} IndexKey;
-
-// Union not needed for one sorting option, but if we want to sort by different data types,
-// in the future, which is a reasonable assumption, it'd be efficient to share memory space.
-typedef union {
-    double AccountBalance;
-} KeyType;
-
-typedef struct {
-    int AccountNumber;
-    char FirstName[MAX_CHAR_LENGTH];
-    char LastName[MAX_CHAR_LENGTH];
-    double AccountBalance;
-    double LastPaymentAmount;
-} Customer;
-
-typedef struct {
-    KeyType Key;
-    long FilePosition;
-} IndexRecord;
-
-typedef struct {                   // Index file header; contains the metadata for records.
-    IndexKey IndexKey;             // The field by which the data is sorted.
-    char AppName[MAX_CHAR_LENGTH]; // The name of the index file.
-    int RecordCount;               // The number of records in the index.
-} IndexHeader;
-
-
-// FUNCTION PROTOTYPES
-long fileSize(FILE *input);
-
-int compare(const void *left, const void *right);
 
 
 IndexKey indexKey;

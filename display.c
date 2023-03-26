@@ -4,47 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define MAX_CHAR_LENGTH 20
+#include "assign08.h"
 
 #define INDEX_FILE "accounts.idx"
 #define DATA_FILE  "accounts.dat"
 #define APP_NAME   "Assignment08"
-
-typedef enum {
-    ACCOUNT_BALANCE
-} IndexKey;
-
-typedef union {
-    double AccountBalance;
-} KeyType;
-
-typedef struct {
-    int AccountNumber;
-    char FirstName[MAX_CHAR_LENGTH];
-    char LastName[MAX_CHAR_LENGTH];
-    double AccountBalance;
-    double LastPaymentAmount;
-} Customer;
-
-typedef struct {
-    KeyType Key;
-    long FilePosition;
-} IndexRecord;
-
-typedef struct {
-    IndexKey IndexKey;
-    char AppName[MAX_CHAR_LENGTH];
-    int RecordCount;
-} IndexHeader;
-
-
-// FUNCTION PROTOTYPES
-long fileSize(FILE *input);
-
-void printNaturalOrder(char dataFile[]);
-
-void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]);
 
 
 // DRIVES THE PROGRAM
