@@ -36,7 +36,7 @@ typedef struct {
     int         RecordCount;
 } IndexHeader;
 
-typedef void(*FUNCTION_ARRAY_PTR[MAX_FUNC_PTR_ARGS]) (FILE* dataFilePtr, FILE* indexFilePtr);
+typedef void(*FUNCTION_ARRAY_PTR[MAX_FUNC_PTR_ARGS]) (char fileName1[], char fileName2[]);
 
 
 // Function prototypes
@@ -44,6 +44,6 @@ long fileSize( FILE *input );
 
 int compare( const void *left, const void *right );
 
-void printAccountBalanceNaturalOrder(FILE* dataFilePtr, FILE* indexFilePtr);
+void printAccountBalanceNaturalOrder(char dataFile[], char indexFile[] );
 
-void printAccountBalanceInDescendingOrder(FILE* dataFilePtr, FILE* indexFilePtr);
+void printAccountBalanceInDescendingOrder( char dataFile[], char indexFile[] );
