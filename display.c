@@ -10,11 +10,18 @@
 // Drives the program
 int main(int argc, char *argv[]) {
 
+    // Check number of arguments passed to main().
     if (argc != 3) {
         printf("\nThis program requires 3 arguments. Terminating program.");
         exit(EXIT_FAILURE);
     }
 
+    // Function pointer
+    FUNCTION_ARRAY_PTR myFunctions;
+    myFunctions[1] = &printAccountBalanceNaturalOrder;
+    myFunctions[2] = &printAccountBalanceInDescendingOrder;
+
+    // Continue with program.
     int EXIT_VALUE = 3;
     int userChoice;
 
@@ -32,11 +39,11 @@ int main(int argc, char *argv[]) {
 
         switch (userChoice) {
             case 1: {
-                printNaturalOrder(argv[1]);
+                myFunctions[1](argv[1], argv[2]); // Print natural order.
                 break;
             }
             case 2: {
-                printAccountBalanceInDescendingOrder(argv[1], argv[2]);
+                myFunctions[2](argv[1], argv[2]); // Print descending order.
                 break;
             }
             default: {
@@ -54,11 +61,8 @@ int main(int argc, char *argv[]) {
     puts("Goodbye!\n");
 }
 
-
-// FUNCTION DEFINITIONS
-
 // Prints records in natural order.
-void printNaturalOrder(char dataFile[]) {
+void printAccountBalanceNaturalOrder(char dataFile[], char indexFile[]) {
 
     FILE *dataFilePtr; // Will point to the file from which data is read.
 

@@ -8,6 +8,7 @@
     #define ASSIGN08_H
     #define MAX_CHAR_LENGTH 20
     #define APP_NAME "Assign08"
+    #define MAX_FUNC_PTR_ARGS 3
 #endif
 
 typedef enum { ACCOUNT_BALANCE } IndexKey;
@@ -35,12 +36,14 @@ typedef struct {
     int         RecordCount;
 } IndexHeader;
 
+typedef void(*FUNCTION_ARRAY_PTR[MAX_FUNC_PTR_ARGS]) (char fileName1[], char fileName2[]);
+
 
 // Function prototypes
 long fileSize( FILE *input );
 
 int compare( const void *left, const void *right );
 
-void printNaturalOrder( char dataFile[] );
+void printAccountBalanceNaturalOrder(char dataFile[], char indexFile[] );
 
 void printAccountBalanceInDescendingOrder( char dataFile[], char indexFile[] );

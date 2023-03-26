@@ -12,11 +12,13 @@ IndexKey indexKey;
 // Drives the program
 int main(int argc, char *argv[]) {
 
+    // Check number of arguments passed to main().
     if (argc != 3) {
         printf("\nYou must pass 3 arguments. Terminating program.");
         exit(EXIT_FAILURE);
     }
 
+    // Continue with program.
     FILE *dataFilePtr;                // Will point to the .dat file from which we'll be reading.
     FILE *indexAccountBalanceFilePtr; // Will point to the .idx file we'll be creating.
 
@@ -100,9 +102,6 @@ int main(int argc, char *argv[]) {
     fclose(dataFilePtr);
     fclose(indexAccountBalanceFilePtr);
 }
-
-
-// FUNCTION DEFINITIONS
 
 // Determines the size of the file based on the size of one record and the total number of records.
 long fileSize(FILE *input) {
