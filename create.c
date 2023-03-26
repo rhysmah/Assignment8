@@ -91,3 +91,10 @@ int main(int argc, char *argv[]) {
 
     printf("\n%d record(s) were successfully written to \"%s\"\n", recordCount, OUTPUT_FILE_NAME);
 }
+
+// Put into .h -- use them for both
+// Struct definitions
+// function prototypes
+// typedefs
+
+// Implement display.c menu using function pointers.

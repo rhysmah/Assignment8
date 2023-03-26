@@ -53,6 +53,11 @@ IndexKey indexKey;
 // DRIVES THE PROGRAM
 int main(int argc, char *argv[]) {
 
+    if (argc != 3) {
+        printf("\nYou must pass 3 arguments. Terminating program.");
+        exit(EXIT_FAILURE);
+    }
+
     FILE *dataFilePtr;                // Will point to the .dat file from which we'll be reading.
     FILE *indexAccountBalanceFilePtr; // Will point to the .idx file we'll be creating.
 

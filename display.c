@@ -51,6 +51,11 @@ void printAccountBalanceInDescendingOrder(int numOfArgs, char dataFile[], char i
 // DRIVES THE PROGRAM
 int main(int argc, char *argv[]) {
 
+    if (argc != 3) {
+        printf("\nYou must pass 3 arguments. Terminating program.");
+        exit(EXIT_FAILURE);
+    }
+
     int EXIT_VALUE = 3;
     int userChoice;
 
@@ -80,7 +85,6 @@ int main(int argc, char *argv[]) {
                        ">>> ");
             }
         }
-
         printf("\nSelect another option:\n"
                "  (1) Account Balance: Natural Order\n"
                "  (2) Account Balance: Descending Order\n"
@@ -127,7 +131,7 @@ void printNaturalOrder(int numOfArgs, char dataFile[], ...) {
     printf("\n-----------------------------------------------------------------\n"
            "NATURAL ORDER\n"
            "-----------------------------------------------------------------\n"
-           "%7s %8s %11s %15s %18s\n"
+           "%-7s %8s %11s %-15s %-18s\n"
            "-----------------------------------------------------------------\n",
            "Account #", "First", "Last", "Balance", "Last Payment");
 
@@ -208,13 +212,12 @@ void printAccountBalanceInDescendingOrder(int numOfArgs, char dataFile[], char i
     printf("\n-----------------------------------------------------------------\n"
            "Account Balance (Descending Order)\n"
            "-----------------------------------------------------------------\n"
-           "%7s %8s %11s %15s %18s\n"
+           "%-7s %8s %11s %-15s %-18s\n"
            "-----------------------------------------------------------------\n",
            "Account #", "First", "Last", "Balance", "Last Payment");
 
     // Read first index record
     Customer customerTemp = {0, "", "", 0.0, 0.0};
-
     readCount = fread(&indexTemp, sizeof(IndexRecord), 1, indexAccountBalanceFilePtr);
 
     // Enter loop if not at EOF and the first index record, above, was properly read.
