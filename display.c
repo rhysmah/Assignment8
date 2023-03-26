@@ -1,17 +1,13 @@
 //
 // Created by Rhys Mahannah on 2023-03-19.
 //
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "assign08.h"
 
-#define INDEX_FILE "accounts.idx"
-#define DATA_FILE  "accounts.dat"
-#define APP_NAME   "Assignment08"
-
-
-// DRIVES THE PROGRAM
+// Drives the program
 int main(int argc, char *argv[]) {
 
     if (argc != 3) {
@@ -36,11 +32,11 @@ int main(int argc, char *argv[]) {
 
         switch (userChoice) {
             case 1: {
-                printNaturalOrder(DATA_FILE);
+                printNaturalOrder(argv[1]);
                 break;
             }
             case 2: {
-                printAccountBalanceInDescendingOrder(DATA_FILE, INDEX_FILE);
+                printAccountBalanceInDescendingOrder(argv[1], argv[2]);
                 break;
             }
             default: {
@@ -55,7 +51,7 @@ int main(int argc, char *argv[]) {
                ">>> ");
         scanf("%d", &userChoice);
     }
-    puts("Goodbye!");
+    puts("Goodbye!\n");
 }
 
 

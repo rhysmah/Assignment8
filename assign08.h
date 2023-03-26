@@ -7,6 +7,7 @@
 #ifndef ASSIGN08_H
     #define ASSIGN08_H
     #define MAX_CHAR_LENGTH 20
+    #define APP_NAME "Assign08"
 #endif
 
 typedef enum { ACCOUNT_BALANCE } IndexKey;

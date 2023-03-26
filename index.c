@@ -1,23 +1,19 @@
 //
 // Created by Rhys Mahannah on 2023-03-23.
 //
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "assign08.h"
 
-#define APP_NAME "Assignment08"
-#define DAT_FILE "accounts.dat"
-#define IDX_NAME "accounts.idx"
-
-
 IndexKey indexKey;
 
-// DRIVES THE PROGRAM
+// Drives the program
 int main(int argc, char *argv[]) {
 
-    if (argc != 2) {
-        printf("\nYou must pass 2 arguments. Terminating program.");
+    if (argc != 3) {
+        printf("\nYou must pass 3 arguments. Terminating program.");
         exit(EXIT_FAILURE);
     }
 
@@ -36,14 +32,14 @@ int main(int argc, char *argv[]) {
     indexKey = ACCOUNT_BALANCE;
 
     // Open DAT file in read-only mode.
-    if ((dataFilePtr = fopen(DAT_FILE, "rb")) == NULL) {
-        printf("\nERROR: File \"%s\" not found. Terminating program.\n", DAT_FILE);
+    if ((dataFilePtr = fopen(argv[1], "rb")) == NULL) {
+        printf("\nERROR: File \"%s\" not found. Terminating program.\n", argv[1]);
         exit(EXIT_FAILURE);
     }
 
     // Create IDX file to which data will be written.
-    if ((indexAccountBalanceFilePtr = fopen(IDX_NAME, "wb")) == NULL) {
-        printf("\nERROR: File \"%s\" could not be created. Terminating program.", IDX_NAME);
+    if ((indexAccountBalanceFilePtr = fopen(argv[2], "wb")) == NULL) {
+        printf("\nERROR: File \"%s\" could not be created. Terminating program.", argv[2]);
         exit(EXIT_FAILURE);
     }
 
@@ -66,7 +62,7 @@ int main(int argc, char *argv[]) {
     Customer tempCustomer = {0, "", "", 0.0, 0.0};
     readCount = fread(&tempCustomer, sizeof(Customer), 1, dataFilePtr);
 
-    // Loop runs if not EOF AND if first record, above, was read successfully.
+    // Loop runs if not end-of-file AND if first record, above, was read successfully.
     while (!feof(dataFilePtr) && readCount == 1) {
         indexRecords[indexRecordCount].Key.AccountBalance = tempCustomer.AccountBalance; // This is how records are org.
         indexRecords[indexRecordCount].FilePosition = filePosition;                      // Position of record in file.
@@ -81,9 +77,8 @@ int main(int argc, char *argv[]) {
     // qsort() takes as its fourth argument a function pointer, so we must pass ADDRESS of compare function.
     qsort(indexRecords, indexRecordCount, sizeof(IndexRecord), &compare);
 
-    printf("Index Header Size: %lu\n"
-           "Index Record Size: %lu\n"
-           "\n",
+    printf("\nIndex Header Size: %lu\n"
+           "Index Record Size: %lu\n\n",
            sizeof(IndexHeader),
            sizeof(IndexRecord));
 
@@ -96,7 +91,7 @@ int main(int argc, char *argv[]) {
     writeCount = fwrite(indexRecords, sizeof(IndexRecord), indexRecordCount, indexAccountBalanceFilePtr);
 
     printf("%d records were processed.\n", writeCount);
-    printf("Index file size: %ld\n", fileSize(indexAccountBalanceFilePtr));
+    printf("Index file size: %ld\n\n", fileSize(indexAccountBalanceFilePtr));
 
     // Free memory dynamically allocated to create records.
     free(indexRecords);
@@ -136,11 +131,11 @@ int compare(const void *left, const void *right) {
 
     if (pLeft->Key.AccountBalance > pRight->Key.AccountBalance)
     {
-        return -1; // This would be ascending order, which we don't want.
+        return -1; // Ascending order
     }
     else if (pLeft->Key.AccountBalance < pRight->Key.AccountBalance)
     {
-        return 1;  // This allows us to sort Account Balance in descending order.
+        return 1;  // Descending order
     }
-    return 0;      // If the Account Balances are the same,
+    return 0;      // Equivalent
 }
