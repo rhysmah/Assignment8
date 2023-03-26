@@ -128,12 +128,9 @@ int compare(const void *left, const void *right) {
     IndexRecord *pLeft = (IndexRecord *) left;
     IndexRecord *pRight = (IndexRecord *) right;
 
-    if (pLeft->Key.AccountBalance > pRight->Key.AccountBalance)
-    {
+    if (pLeft->Key.AccountBalance > pRight->Key.AccountBalance) {
         return -1; // Ascending order
-    }
-    else if (pLeft->Key.AccountBalance < pRight->Key.AccountBalance)
-    {
+    } else if (pLeft->Key.AccountBalance < pRight->Key.AccountBalance) {
         return 1;  // Descending order
     }
     return 0;      // Equivalent

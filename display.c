@@ -39,11 +39,11 @@ int main(int argc, char *argv[]) {
 
         switch (userChoice) {
             case 1: {
-                myFunctions[1](argv[1], argv[2]); // Print natural order.
+                myFunctions[userChoice](argv[1], argv[2]); // Print natural order.
                 break;
             }
             case 2: {
-                myFunctions[2](argv[1], argv[2]); // Print descending order.
+                myFunctions[userChoice](argv[1], argv[2]); // Print descending order.
                 break;
             }
             default: {
