@@ -1,7 +1,6 @@
 //
 // Created by Rhys Mahannah on 2023-03-19.
 //
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,9 +42,9 @@ typedef struct {
 // FUNCTION PROTOTYPES
 long fileSize(FILE *input);
 
-void printNaturalOrder(int numOfArgs, char dataFile[], ...);
+void printNaturalOrder(char dataFile[]);
 
-void printAccountBalanceInDescendingOrder(int numOfArgs, char dataFile[], char indexFile[], ...);
+void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]);
 
 
 // DRIVES THE PROGRAM
@@ -73,11 +72,11 @@ int main(int argc, char *argv[]) {
 
         switch (userChoice) {
             case 1: {
-                printNaturalOrder(1, DATA_FILE);
+                printNaturalOrder(DATA_FILE);
                 break;
             }
             case 2: {
-                printAccountBalanceInDescendingOrder(2, DATA_FILE, INDEX_FILE);
+                printAccountBalanceInDescendingOrder(DATA_FILE, INDEX_FILE);
                 break;
             }
             default: {
@@ -99,24 +98,7 @@ int main(int argc, char *argv[]) {
 // FUNCTION DEFINITIONS
 
 // Prints records in natural order.
-void printNaturalOrder(int numOfArgs, char dataFile[], ...) {
-
-    // Confirm function was passed correct number of arguments.
-    int count;
-    int total = 0;
-    va_list args;
-
-    va_start(args, dataFile);
-    for (count = 0; count < numOfArgs; ++count) {
-        total += va_arg(args, int);
-    }
-    va_end(args);
-
-    if (count != 1) {
-        puts("\nYou must input ONE argument for this function: An input file name.\n"
-             "Program terminating.\n");
-        exit(EXIT_FAILURE);
-    }
+void printNaturalOrder(char dataFile[]) {
 
     FILE *dataFilePtr; // Will point to the file from which data is read.
 
@@ -131,7 +113,7 @@ void printNaturalOrder(int numOfArgs, char dataFile[], ...) {
     printf("\n-----------------------------------------------------------------\n"
            "NATURAL ORDER\n"
            "-----------------------------------------------------------------\n"
-           "%-7s %8s %11s %-15s %-18s\n"
+           "%7s %8s %11s %15s %18s\n"
            "-----------------------------------------------------------------\n",
            "Account #", "First", "Last", "Balance", "Last Payment");
 
@@ -156,7 +138,7 @@ void printNaturalOrder(int numOfArgs, char dataFile[], ...) {
 }
 
 // Prints records based on account balance, in descending order.
-void printAccountBalanceInDescendingOrder(int numOfArgs, char dataFile[], char indexFile[], ...) {
+void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
 
     // Confirm number of arguments is correct.
 
@@ -170,14 +152,14 @@ void printAccountBalanceInDescendingOrder(int numOfArgs, char dataFile[], char i
     IndexRecord indexTemp;
 
     // (1) Open .dat file in read-only mode. If not found, print error and terminate; else, continue.
-    if ((dataFilePtr = fopen(DATA_FILE, "rb")) == NULL) {
-        printf("ERROR: File \"%s\" not found. Terminating program.\n", DATA_FILE);
+    if ((dataFilePtr = fopen(dataFile, "rb")) == NULL) {
+        printf("ERROR: File \"%s\" not found. Terminating program.\n", dataFile);
         exit(EXIT_FAILURE);
     }
 
     // (2) Open .idx file in read-only mode. If not found, print error and terminate; else, continue.
-    if ((indexAccountBalanceFilePtr = fopen(INDEX_FILE, "rb")) == NULL) {
-        printf("ERROR: File \"%s\" not found. Terminating program.\n", INDEX_FILE);
+    if ((indexAccountBalanceFilePtr = fopen(indexFile, "rb")) == NULL) {
+        printf("ERROR: File \"%s\" not found. Terminating program.\n", indexFile);
         exit(EXIT_FAILURE);
     }
 
@@ -212,7 +194,7 @@ void printAccountBalanceInDescendingOrder(int numOfArgs, char dataFile[], char i
     printf("\n-----------------------------------------------------------------\n"
            "Account Balance (Descending Order)\n"
            "-----------------------------------------------------------------\n"
-           "%-7s %8s %11s %-15s %-18s\n"
+           "%7s %8s %11s %15s %18s\n"
            "-----------------------------------------------------------------\n",
            "Account #", "First", "Last", "Balance", "Last Payment");
 

@@ -3,4 +3,4 @@ project(Assignment8 C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(Assignment8 create.c index.c display.c)
+add_executable(Assignment8 index.c display.c)
