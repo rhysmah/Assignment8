@@ -16,6 +16,22 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    // Check files
+    FILE *dataFilePtr;
+    FILE *indexFilePtr;
+
+    // Open .dat file in read-only mode. If not found, print error and terminate; else, continue.
+    if ((dataFilePtr = fopen(argv[1], "rb")) == NULL) {
+        printf("ERROR: File \"%s\" not found. Terminating program.\n", argv[1]);
+        exit(EXIT_FAILURE);
+    }
+
+    // Open .idx file in read-only mode. If not found, print error and terminate; else, continue.
+    if ((indexFilePtr = fopen(argv[2], "rb")) == NULL) {
+        printf("ERROR: File \"%s\" not found. Terminating program.\n", argv[2]);
+        exit(EXIT_FAILURE);
+    }
+
     // Function pointer
     FUNCTION_ARRAY_PTR myFunctions;
     myFunctions[1] = &printAccountBalanceNaturalOrder;
@@ -39,11 +55,11 @@ int main(int argc, char *argv[]) {
 
         switch (userChoice) {
             case 1: {
-                myFunctions[1](argv[1], argv[2]); // Print natural order.
+                myFunctions[1](dataFilePtr, NULL); // Print natural order.
                 break;
             }
             case 2: {
-                myFunctions[2](argv[1], argv[2]); // Print descending order.
+                myFunctions[2](dataFilePtr, indexFilePtr); // Print descending order.
                 break;
             }
             default: {
@@ -62,15 +78,7 @@ int main(int argc, char *argv[]) {
 }
 
 // Prints records in natural order.
-void printAccountBalanceNaturalOrder(char dataFile[], char indexFile[]) {
-
-    FILE *dataFilePtr; // Will point to the file from which data is read.
-
-    // (1) Check if file is found; if not, print error message and terminate program.
-    if ((dataFilePtr = fopen(dataFile, "rb")) == NULL) {
-        printf("ERROR: File \"%s\" not found. Terminating program.", dataFile);
-        exit(EXIT_FAILURE);
-    }
+void printAccountBalanceNaturalOrder(FILE* dataFilePtr, FILE* null) {
 
     // Print data headers
     printf("\nNATURAL ORDER\n"
@@ -100,10 +108,7 @@ void printAccountBalanceNaturalOrder(char dataFile[], char indexFile[]) {
 }
 
 // Prints records based on account balance, in descending order.
-void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
-
-    FILE *dataFilePtr;
-    FILE *indexAccountBalanceFilePtr;
+void printAccountBalanceInDescendingOrder(FILE* dataFilePtr, FILE* indexFilePtr) {
 
     int readCount;
     int recordCount;
@@ -111,23 +116,11 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
     IndexHeader indexHeader;
     IndexRecord indexTemp;
 
-    // Open .dat file in read-only mode. If not found, print error and terminate; else, continue.
-    if ((dataFilePtr = fopen(dataFile, "rb")) == NULL) {
-        printf("ERROR: File \"%s\" not found. Terminating program.\n", dataFile);
-        exit(EXIT_FAILURE);
-    }
-
-    // Open .idx file in read-only mode. If not found, print error and terminate; else, continue.
-    if ((indexAccountBalanceFilePtr = fopen(indexFile, "rb")) == NULL) {
-        printf("ERROR: File \"%s\" not found. Terminating program.\n", indexFile);
-        exit(EXIT_FAILURE);
-    }
-
     // Calculate # records in .dat file
     recordCount = fileSize(dataFilePtr) / sizeof(Customer);
 
     // Read meta data in Index Header
-    fread(&indexHeader, sizeof(IndexHeader), 1, indexAccountBalanceFilePtr);
+    fread(&indexHeader, sizeof(IndexHeader), 1, indexFilePtr);
 
     // Confirm that .dat and .idx files are the correct pair.
     // First, check that the data file names match.
@@ -135,7 +128,7 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
         puts("ERROR: Data File and Index File are different versions. Terminating program.");
 
         fclose(dataFilePtr);
-        fclose(indexAccountBalanceFilePtr);
+        fclose(indexFilePtr);
 
         exit(EXIT_FAILURE);
     }
@@ -145,7 +138,7 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
         puts("ERROR: Data File and Index File have different number of records. Terminating program.");
 
         fclose(dataFilePtr);
-        fclose(indexAccountBalanceFilePtr);
+        fclose(indexFilePtr);
 
         exit(EXIT_FAILURE);
     }
@@ -159,10 +152,10 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
 
     // Read first index record
     Customer customerTemp = {0, "", "", 0.0, 0.0};
-    readCount = fread(&indexTemp, sizeof(IndexRecord), 1, indexAccountBalanceFilePtr);
+    readCount = fread(&indexTemp, sizeof(IndexRecord), 1, indexFilePtr);
 
     // Enter loop if not at EOF and the first index record, above, was properly read.
-    while ((!feof(indexAccountBalanceFilePtr)) && (readCount == 1)) {
+    while ((!feof(indexFilePtr)) && (readCount == 1)) {
 
         // Check that the next record, based on the file position of the
         // previously read index record, is the correct one; if not, print
@@ -171,7 +164,7 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
             printf("Seek Error. Terminating program.");
 
             fclose(dataFilePtr);
-            fclose(indexAccountBalanceFilePtr);
+            fclose(indexFilePtr);
 
             exit(EXIT_FAILURE);
         }
@@ -186,12 +179,12 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
                customerTemp.LastPaymentAmount);
 
         // Read next index record
-        readCount = fread(&indexTemp, sizeof(IndexRecord), 1, indexAccountBalanceFilePtr);
+        readCount = fread(&indexTemp, sizeof(IndexRecord), 1, indexFilePtr);
     }
 
     // When done, close files.
     fclose(dataFilePtr);
-    fclose(indexAccountBalanceFilePtr);
+    fclose(indexFilePtr);
 }
 
 // Determines the size of the file based on the size of one record and the total number of records.
