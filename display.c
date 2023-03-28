@@ -1,5 +1,6 @@
 //
-// Created by Rhys Mahannah on 2023-03-19.
+// Created by: Rhys Mahannah
+// Date:       Sunday, March 26, 2023
 //
 
 #include <stdio.h>
@@ -11,7 +12,7 @@
 int main(int argc, char *argv[]) {
 
     // Check number of arguments passed to main().
-    if (argc != 3) {
+    if (argc != NUM_OF_ARGS) {
         printf("\nThis program requires 3 arguments. Terminating program.");
         exit(EXIT_FAILURE);
     }
@@ -39,7 +40,7 @@ int main(int argc, char *argv[]) {
 
         switch (userChoice) {
             case 1: {
-                myFunctions[userChoice](argv[1], argv[2]); // Print natural order.
+                myFunctions[userChoice](argv[1], NULL); // Print natural order.
                 break;
             }
             case 2: {
@@ -73,7 +74,7 @@ void printAccountBalanceNaturalOrder(char dataFile[], char indexFile[]) {
     }
 
     // Print data headers
-    printf("\nNATURAL ORDER\n"
+    printf("\nAccount Balance: Natural Order\n"
            "-----------------------------------------------------------------\n"
            "%7s %8s %11s %15s %18s\n"
            "-----------------------------------------------------------------\n",
@@ -99,7 +100,7 @@ void printAccountBalanceNaturalOrder(char dataFile[], char indexFile[]) {
     fclose(dataFilePtr);
 }
 
-// Prints records based on account balance, in descending order.
+// Prints records in descending order.
 void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
 
     FILE *dataFilePtr;
@@ -151,7 +152,7 @@ void printAccountBalanceInDescendingOrder(char dataFile[], char indexFile[]) {
     }
 
     // Print out records in specified order.
-    printf("\nAccount Balance (Descending Order)\n"
+    printf("\nAccount Balance: Descending Order\n"
            "-----------------------------------------------------------------\n"
            "%7s %8s %11s %15s %18s\n"
            "-----------------------------------------------------------------\n",

@@ -1,5 +1,6 @@
 //
-// Created by Rhys Mahannah on 2023-03-23.
+// Created by: Rhys Mahannah
+// Date:       Sunday, March 26, 2023
 //
 
 #include <stdio.h>
@@ -13,7 +14,7 @@ IndexKey indexKey;
 int main(int argc, char *argv[]) {
 
     // Check number of arguments passed to main().
-    if (argc != 3) {
+    if (argc != NUM_OF_ARGS) {
         printf("\nYou must pass 3 arguments. Terminating program.");
         exit(EXIT_FAILURE);
     }
@@ -103,7 +104,7 @@ int main(int argc, char *argv[]) {
     fclose(indexAccountBalanceFilePtr);
 }
 
-// Determines the size of the file based on the size of one record and the total number of records.
+// Determines the size of the file.
 long fileSize(FILE *input) {
     long orgPos;
     long startPos;
